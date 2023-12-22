@@ -1,5 +1,5 @@
 # CourseMultiplatform
-掌邮课表多平台版，基于 CourseMultiplatform
+掌邮课表多平台版，基于 ComposeMultiplatform
 
 支持以下平台:
 - Android
