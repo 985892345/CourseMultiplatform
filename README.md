@@ -1,22 +1,85 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
+# CourseMultiplatform
+掌邮课表多平台版，基于 CourseMultiplatform
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+支持以下平台:
+- Android
+- iOS
+- Mac
+- Windows
+- Linux
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## 打包教程
+请先下载 idea 或者 Android Studio (后文简称为 AS)
 
+### 检查环境
+请看[官方教程](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-setup.html#check-your-environment)
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+### Android 打包
+直接使用 Android Studio，然后选择配置为 composeApp 即可
 
-**Note:** Compose/Web is Experimental and may be changed at any time. Use it only for evaluation purposes.
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
+注意：上诉打包 AS 会直接安装到手机上，从手机上提取出 apk 后即使分享给他人也无法安装
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+可以使用 AS 打包旁边的锤子🔨按钮打出默认的 debug apk (输出文件在 build/outputs/apk/debug 下)
+
+### iOS 打包
+
+> 前提：需要 Mac
+
+#### 模拟器
+idea 或 AS 下载 `Kotlin Multiplatform Mobile` 插件，然后运行 `iosApp` 配置即可
+
+#### 真机
+因为本人无真机，所以无法调试，请看[官方教程](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-create-first-app.html#run-on-a-real-ios-device)
+
+### Mac 打包
+在打包前请先确认 jdk 文件是否完整，请查看 [缺失 jpackage](#缺失jpackage)
+
+运行 gradle 命令，输出文件在 build/compose/binaries/main(main-release)/dmg
+```shell
+# 可以点击 idea 或 AS 右侧的大象图标里 Tasks/compose desktop 下同名任务
+# debug 包
+./gradlew packageDmg
+
+# release 包
+./gradlew packageReleaseDmg
+```
+
+### Win 打包
+在打包前请先确认 jdk 文件是否完整，请查看 [缺失 jpackage](#缺失jpackage)
+
+运行 gradle 命令，输出文件在 build/compose/binaries/main(main-release)/msi
+```shell
+# 可以点击 idea 或 AS 右侧的大象图标里 Tasks/compose desktop 下同名任务
+# debug 包
+./gradlew packageMsi
+
+# release 包
+./gradlew packageReleaseMsi
+```
+
+### Linux 打包
+在打包前请先确认 jdk 文件是否完整，请查看 [缺失 jpackage](#缺失jpackage)
+
+运行 gradle 命令，输出文件在 build/compose/binaries/main(main-release)/deb
+```shell
+# 可以点击 idea 或 AS 右侧的大象图标里 Tasks/compose desktop 下同名任务
+# debug 包
+./gradlew packageDeb
+
+# release 包
+./gradlew packageReleaseDeb
+```
+
+## 问题
+
+### 缺失jpackage
+gradle 打包可能会遇到以下问题：
+```
+* What went wrong:
+Execution failed for task ':composeApp:checkRuntime'.
+> Failed to check JDK distribution: 'jpackage' is missing
+  JDK distribution path: /Applications/Android Studio.app/Contents/jbr/Contents/Home
+
+```
+Compose 在 desktop 端打包依赖 jpackage, AS 自带的 JDK 不完整，
+请在 Settings - Build, Execution... - Build Tools - Gradle 中设置完整的 JDK
