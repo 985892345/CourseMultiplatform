@@ -1,5 +1,6 @@
 package com.multiplatform.course.compose.course.item
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.multiplatform.course.compose.base.IComposePresenter
+import com.multiplatform.course.compose.toast.toast
 
 /**
  * .
@@ -47,7 +49,8 @@ class CourseItemCompose(
   @Composable
   override fun Compose() {
     Card(
-      modifier = Modifier.fillMaxSize().padding(1.6.dp),
+      modifier = Modifier.fillMaxSize()
+        .padding(1.6.dp),
       shape = RoundedCornerShape(8.dp),
       backgroundColor = itemColor,
       elevation = 0.5.dp
@@ -55,6 +58,7 @@ class CourseItemCompose(
       Box(
         modifier = Modifier
           .fillMaxSize()
+          .clickable { toast("还未实现") }
           .padding(7.dp, 8.dp)
       ) {
         Text(

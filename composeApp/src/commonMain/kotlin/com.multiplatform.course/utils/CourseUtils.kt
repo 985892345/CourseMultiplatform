@@ -186,9 +186,9 @@ fun parseClassRoom(classRoom: String): String {
   } else {
     val linkStringSb = StringBuilder()
     for ((index, str) in parseStrings.withIndex()) {
-      linkStringSb.append(str)
+      linkStringSb.append(str.replace("/", " "))
       if (index < (parseStrings.size - 1)) {
-        linkStringSb.append("/")
+        linkStringSb.append(" ")
       }
     }
     linkStringSb.toString()

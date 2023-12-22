@@ -35,9 +35,10 @@ data class ChooseDialog(
   val positiveBtnText: String = "确定",
   val negativeBtnText: String = "取消",
   override val properties: DialogProperties = DialogProperties(),
-  val onClickNegativeBtn: ChooseDialog.() -> Unit = { hide() },
+  override val onDismissRequest: Dialog.() -> Unit = { hide() },
   val onClickPositionBtn: ChooseDialog.() -> Unit = { hide() },
-  val content: @Composable () -> Unit
+  val onClickNegativeBtn: ChooseDialog.() -> Unit = { hide() },
+  val content: @Composable () -> Unit,
 ) : Dialog(properties) {
 
   @Composable

@@ -12,7 +12,7 @@ import java.util.prefs.Preferences
  */
 actual object Preference {
 
-  val prefs = Preferences.userRoot().node("/com/cqupt/course")
+  val prefs = Preferences.userRoot().node("/com/multiplatform/course")
 
   actual fun getString(key: String): String? {
     return prefs.get(key, null)

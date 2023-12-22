@@ -7,4 +7,5 @@ package com.multiplatform.course.platform
  * @date 2023/12/22 19:06
  */
 actual fun log(msg: CharSequence) {
+  println(".(${Exception().stackTrace[1].run { "$fileName:$lineNumber" }}) -> $msg")
 }
