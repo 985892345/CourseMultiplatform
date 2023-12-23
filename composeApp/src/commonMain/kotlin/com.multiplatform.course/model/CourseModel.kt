@@ -5,20 +5,17 @@ import androidx.compose.ui.graphics.Color
 import com.multiplatform.course.compose.course.CoursePagerCompose
 import com.multiplatform.course.compose.course.day.CourseDayCompose
 import com.multiplatform.course.compose.course.item.CourseItemCompose
+import com.multiplatform.course.compose.toast.toast
 import com.multiplatform.course.network.Network
 import com.multiplatform.course.network.api.CourseApiService
 import com.multiplatform.course.network.bean.StuLessonBean
 import com.multiplatform.course.platform.Preference
-import com.multiplatform.course.platform.log
 import com.multiplatform.course.utils.parseClassRoom
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.datetime.DayOfWeek
-import kotlin.coroutines.resume
 
 /**
  * .
@@ -41,6 +38,8 @@ object CourseModel {
         }.flatten()
         Preference.edit { put("nowWeek", data.nowWeek) }
         CourseData(data.nowWeek, list)
+      }.catch {
+        toast("网络异常")
       }
   }
 

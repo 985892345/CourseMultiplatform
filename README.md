@@ -94,3 +94,5 @@ Execution failed for task ':composeApp:checkRuntime'.
 ```
 Compose 在 desktop 端打包依赖 jpackage, AS 自带的 JDK 不完整，
 请在 Settings - Build, Execution... - Build Tools - Gradle 中设置完整的 JDK
+
+*JDK 需要 17 及以上版本*
