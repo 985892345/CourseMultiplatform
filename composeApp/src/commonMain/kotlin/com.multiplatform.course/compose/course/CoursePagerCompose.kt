@@ -29,18 +29,12 @@ import com.multiplatform.course.compose.base.IComposePresenter
 import com.multiplatform.course.compose.course.combine.CourseCombineCompose
 import com.multiplatform.course.compose.course.day.CourseDayCompose
 import com.multiplatform.course.compose.course.header.CourseHeaderCompose
-import com.multiplatform.course.compose.dialog.ChooseDialog
-import com.multiplatform.course.compose.toast.toast
-import com.multiplatform.course.model.CourseModel
 import com.multiplatform.course.model.StuNumModel
-import com.multiplatform.course.platform.Preference
-import kotlinx.datetime.Clock
+import com.multiplatform.course.utils.Today
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
-import kotlinx.datetime.todayIn
 
 /**
  * .
@@ -67,14 +61,14 @@ abstract class CoursePagerCompose : IComposePresenter {
   private val mCombineComposes = mutableListOf<CourseCombineComposeImpl>()
 
   val combineComposes: List<CourseCombineCompose> by derivedStateOf(structuralEqualityPolicy()) {
-    mCombineComposes.toMutableList().apply {
+    mCombineComposes.apply {
       repeat(pagerCount - size) {
         add(CourseCombineComposeImpl(size))
       }
       repeat(size - pagerCount) {
         removeLast()
       }
-    }
+    }.toMutableList()
   }
 
   private var currentPage: Int by mutableIntStateOf(0)
@@ -106,7 +100,9 @@ abstract class CoursePagerCompose : IComposePresenter {
   inner class CourseCombineComposeImpl(
     val week: Int,
   ) : CourseCombineCompose(getMonDate(week)) {
-    override val dayOfWeekWithItemsMap: Map<DayOfWeek, List<CourseDayCompose.DayItemState>> by derivedStateOf(structuralEqualityPolicy()) {
+    override val dayOfWeekWithItemsMap: Map<DayOfWeek, List<CourseDayCompose.DayItemState>> by derivedStateOf(
+      structuralEqualityPolicy()
+    ) {
       buildMap<DayOfWeek, MutableList<CourseDayCompose.DayItemState>> {
         (mWeekDataMap[week] ?: emptyList()).forEach {
           getOrPut(it.dayOfWeek) { mutableListOf() }.add(it.dayItemState)
@@ -118,8 +114,7 @@ abstract class CoursePagerCompose : IComposePresenter {
   // 获取 week 页对应的星期一日期，如果 week = 0，则说明是整学期，返回 null
   private fun getMonDate(week: Int): LocalDate? {
     if (week <= 0) return null
-    val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
-    return today.minus(today.dayOfWeek.ordinal, DateTimeUnit.DayBased(1))
+    return Today.minus(Today.dayOfWeek.ordinal, DateTimeUnit.DayBased(1))
       .minus((nowWeek - week) * 7, DateTimeUnit.DayBased(1))
   }
 

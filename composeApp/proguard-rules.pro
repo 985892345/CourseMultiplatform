@@ -19,3 +19,7 @@
 -keepclasseswithmembers class <1>$Companion {
     *** serializer();
 }
+
+# https://juejin.cn/post/6966526844552085512
+-optimizationpasses 7                       # 代码混淆的压缩比例，值介于0-7，默认5
+-keepattributes SourceFile,LineNumberTable  # 保留行号

@@ -50,7 +50,7 @@ object StuNumModel {
 
   /**
    * 显示设置学号的 dialog
-   * @param onSetStuNum 点击确认时的回调，返回 false 则说明此时学号不合法，建议业务方此时 toast 原因
+   * @param onSetStuNum 点击确认时的回调，返回 false 则说明学号不合法，建议业务方此时 toast 原因
    */
   fun showStuNumDialog(onSetStuNum: Dialog.(stuNum: String) -> Boolean = { true }): Dialog {
     val text = mutableStateOf(TextFieldValue(text = stuNum ?: ""))

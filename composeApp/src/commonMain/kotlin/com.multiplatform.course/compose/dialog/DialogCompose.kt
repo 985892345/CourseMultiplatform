@@ -16,7 +16,7 @@ import androidx.compose.ui.window.DialogProperties
  */
 @Stable
 abstract class Dialog(
-  open val properties: DialogProperties,
+  open val properties: DialogProperties = DialogProperties(),
   open val onDismissRequest: Dialog.() -> Unit = { hide() }
 ) {
 
@@ -38,7 +38,7 @@ abstract class Dialog(
     }
   }
 
-  companion object : Dialog(DialogProperties()) {
+  companion object : Dialog() {
     @Composable
     override fun Content() = Unit
   }

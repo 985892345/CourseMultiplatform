@@ -110,8 +110,8 @@ private fun WeekCompose(
         modifier = Modifier
           .padding(start = 12.dp, bottom = 4.dp)
           .align(Alignment.Bottom)
-          .alpha(1 - fraction)
-          .scale(1 - fraction)
+          .alpha(1 - fraction / 2)
+          .scale(1 - fraction / 2)
       )
     }
   }
