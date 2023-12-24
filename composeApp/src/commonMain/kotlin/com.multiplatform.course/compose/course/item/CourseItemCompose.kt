@@ -46,6 +46,10 @@ class CourseItemCompose(
 
   var contentColor: Color by mutableStateOf(contentColor)
 
+  var offsetX by mutableStateOf(0.dp)
+
+  var offsetY by mutableStateOf(0.dp)
+
   @Composable
   override fun Compose() {
     Card(

@@ -64,7 +64,7 @@ abstract class CourseHeaderCompose : IComposePresenter {
         fraction = fraction,
       )
       val backBtnWidth = 88.dp
-      val backBtnPaddingEnd = 6.dp
+      val backBtnPaddingEnd = 12.dp
       Box(modifier = Modifier.align(Alignment.BottomEnd)) {
         BackToNowWeekCompose(
           width = backBtnWidth,
@@ -75,7 +75,7 @@ abstract class CourseHeaderCompose : IComposePresenter {
       }
       Box(modifier = Modifier.align(Alignment.BottomEnd)) {
         SettingCompose(
-          paddingEnd = backBtnWidth + backBtnPaddingEnd + 21.dp,
+          paddingEnd = backBtnWidth + backBtnPaddingEnd + 19.5.dp,
           fraction = fraction,
           onClick = ::clickSetting
         )
@@ -110,8 +110,8 @@ private fun WeekCompose(
         modifier = Modifier
           .padding(start = 12.dp, bottom = 4.dp)
           .align(Alignment.Bottom)
-          .alpha(1 - fraction / 2)
-          .scale(1 - fraction / 2)
+          .alpha(maxOf((0.5F - fraction) * 2, 0F))
+          .scale(maxOf((0.5F - fraction) * 2, 0F))
       )
     }
   }
@@ -160,7 +160,7 @@ private fun SettingCompose(
   Box(
     modifier = Modifier.padding(end = paddingEnd - paddingBottom)
       .size(linkSize + paddingBottom * 2)
-      .offset((1 - fraction) * (paddingEnd - 15.dp))
+      .offset((1 - fraction) * (paddingEnd - 21.5.dp))
       .clip(RoundedCornerShape(8.dp)) // 让点击阴影有圆角
       .clickable(onClick = onClick),
     contentAlignment = Alignment.Center

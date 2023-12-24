@@ -3,8 +3,8 @@ package com.multiplatform.course.model
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.graphics.Color
 import com.multiplatform.course.compose.course.CoursePagerCompose
-import com.multiplatform.course.compose.course.day.CourseDayCompose
 import com.multiplatform.course.compose.course.item.CourseItemCompose
+import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
 import com.multiplatform.course.compose.toast.toast
 import com.multiplatform.course.network.Network
 import com.multiplatform.course.network.api.CourseApiService
@@ -58,8 +58,8 @@ object CourseModel {
   ): CoursePagerCompose.PagerItemState {
     return CoursePagerCompose.PagerItemState(
       week = week,
-      dayOfWeek = DayOfWeek(lesson.hashDay + 1),
-      dayItemState = CourseDayCompose.DayItemState(
+      layoutItem = CourseLayoutCompose.LayoutItem(
+        dayOfWeek = DayOfWeek(lesson.hashDay + 1),
         beginLesson = lesson.beginLesson,
         period = lesson.period,
         itemCompose = CourseItemCompose(

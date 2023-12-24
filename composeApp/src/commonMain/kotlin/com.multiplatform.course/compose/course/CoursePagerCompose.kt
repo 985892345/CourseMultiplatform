@@ -27,12 +27,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.multiplatform.course.compose.base.IComposePresenter
 import com.multiplatform.course.compose.course.combine.CourseCombineCompose
-import com.multiplatform.course.compose.course.day.CourseDayCompose
 import com.multiplatform.course.compose.course.header.CourseHeaderCompose
+import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
 import com.multiplatform.course.model.StuNumModel
 import com.multiplatform.course.utils.Today
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 
@@ -100,13 +99,9 @@ abstract class CoursePagerCompose : IComposePresenter {
   inner class CourseCombineComposeImpl(
     val week: Int,
   ) : CourseCombineCompose(getMonDate(week)) {
-    override val dayOfWeekWithItemsMap: Map<DayOfWeek, List<CourseDayCompose.DayItemState>> by derivedStateOf(
-      structuralEqualityPolicy()
-    ) {
-      buildMap<DayOfWeek, MutableList<CourseDayCompose.DayItemState>> {
-        (mWeekDataMap[week] ?: emptyList()).forEach {
-          getOrPut(it.dayOfWeek) { mutableListOf() }.add(it.dayItemState)
-        }
+    override val layoutItems: List<CourseLayoutCompose.LayoutItem> by derivedStateOf(structuralEqualityPolicy()) {
+      (mWeekDataMap[week] ?: emptyList()).map {
+        it.layoutItem
       }
     }
   }
@@ -121,8 +116,7 @@ abstract class CoursePagerCompose : IComposePresenter {
   @Stable
   class PagerItemState(
     val week: Int,
-    val dayOfWeek: DayOfWeek,
-    val dayItemState: CourseDayCompose.DayItemState
+    val layoutItem: CourseLayoutCompose.LayoutItem,
   )
 
   @OptIn(ExperimentalFoundationApi::class)

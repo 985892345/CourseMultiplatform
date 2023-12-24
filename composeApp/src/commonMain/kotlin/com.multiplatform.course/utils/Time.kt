@@ -15,3 +15,7 @@ import kotlinx.datetime.todayIn
 val Today: LocalDate by lazy {
   Clock.System.todayIn(TimeZone.currentSystemDefault())
 }
+
+fun LocalDate.diffDays(date: LocalDate): Int {
+  return toEpochDays() - date.toEpochDays()
+}

@@ -11,9 +11,6 @@ import com.multiplatform.course.compose.dialog.DialogCompose
 import com.multiplatform.course.compose.toast.ToastCompose
 import com.multiplatform.course.model.CourseModel
 import com.multiplatform.course.model.StuNumModel
-import com.multiplatform.course.platform.Preference
-import com.multiplatform.course.platform.log
-import kotlin.coroutines.resume
 
 @Composable
 fun App() {
@@ -36,7 +33,7 @@ private fun CourseCompose() {
   val coursePagerState = rememberCoursePagerState(
     nowWeek = nowWeek.coerceAtLeast(0),
     pagerPosition = 0,
-    pagerCount = 20,
+    pagerCount = 30,
     data = courseData.list
   )
   if (nowWeek >= 0) {

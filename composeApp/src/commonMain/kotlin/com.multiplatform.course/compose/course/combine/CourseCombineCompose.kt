@@ -11,14 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.multiplatform.course.compose.base.IComposePresenter
-import com.multiplatform.course.compose.course.day.CourseDayCompose
 import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
 import com.multiplatform.course.compose.course.timeline.CourseTimelineCompose
 import com.multiplatform.course.compose.course.week.CourseWeekCompose
 import com.multiplatform.course.utils.Today
-import kotlinx.datetime.DayOfWeek
+import com.multiplatform.course.utils.diffDays
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.minus
 
 /**
  * .
@@ -31,16 +29,21 @@ abstract class CourseCombineCompose(
   val paddingBottom: Dp = 0.dp,
 ) : IComposePresenter {
 
-  abstract val dayOfWeekWithItemsMap: Map<DayOfWeek, List<CourseDayCompose.DayItemState>>
+  abstract val layoutItems: List<CourseLayoutCompose.LayoutItem>
 
-  val layoutCompose = object : CourseLayoutCompose(monDate, paddingBottom) {
-    override val dayOfWeekWithItemsMap: Map<DayOfWeek, List<CourseDayCompose.DayItemState>>
-      get() = this@CourseCombineCompose.dayOfWeekWithItemsMap
+  private val isNowWeek = if (monDate == null) true else Today.diffDays(monDate) in 0..6
+
+  val layoutCompose = object : CourseLayoutCompose(
+    isNowWeek = isNowWeek,
+    paddingBottom = paddingBottom,
+  ) {
+    override val layoutItems: List<LayoutItem>
+      get() = this@CourseCombineCompose.layoutItems
   }
 
   @Composable
   override fun Compose() {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().padding(start = 4.dp, end = 8.dp)) {
       val monthWeight = 0.8F
       Box(modifier = Modifier.height(52.dp)) {
         CourseWeekCompose(monDate = monDate, monthWeight = monthWeight)
@@ -48,10 +51,8 @@ abstract class CourseCombineCompose(
       Box(modifier = Modifier.weight(12F)) {
         Row(modifier = Modifier.fillMaxSize()) {
           Box(modifier = Modifier.weight(monthWeight).padding(bottom = paddingBottom)) {
-            val monDate = monDate
             CourseTimelineCompose(
-              isShowNowTime = if (monDate == null) true else
-                Today.minus(monDate).days in 0..6
+              isShowNowTime = isNowWeek
             )
           }
           Box(modifier = Modifier.weight(7F)) {

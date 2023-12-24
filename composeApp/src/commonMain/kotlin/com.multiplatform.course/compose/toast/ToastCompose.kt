@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
 /**
@@ -75,7 +76,7 @@ fun ToastCompose() {
               .padding(horizontal = 30.dp, vertical = 9.dp),
             contentAlignment = Alignment.Center
           ) {
-            Text(text = AppToastState.msg.toString(), color = Color.White)
+            Text(text = AppToastState.msg.toString(), color = Color.White, fontSize = 14.sp)
           }
         }
       }
