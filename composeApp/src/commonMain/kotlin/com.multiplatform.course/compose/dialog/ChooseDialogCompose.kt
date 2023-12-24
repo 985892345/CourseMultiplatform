@@ -3,6 +3,8 @@ package com.multiplatform.course.compose.dialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -72,24 +74,22 @@ data class ChooseDialog(
 
   @Composable
   private fun TwoBtnCompose() {
-    Box(modifier = Modifier.padding(bottom = 30.dp).fillMaxWidth()) {
-      val btnPadding = (width - btnWidth * 2) / 3
+    Row(modifier = Modifier.padding(bottom = 30.dp).fillMaxWidth()) {
+      Spacer(modifier = Modifier.weight(1F))
       Box(
-        modifier = Modifier
-          .align(Alignment.BottomStart)
-          .padding(start = btnPadding),
+        modifier = Modifier,
         contentAlignment = Alignment.Center
       ) {
         NegativeBtnCompose()
       }
+      Spacer(modifier = Modifier.weight(0.8F))
       Box(
-        modifier = Modifier
-          .align(Alignment.BottomEnd)
-          .padding(end = btnPadding),
+        modifier = Modifier,
         contentAlignment = Alignment.Center
       ) {
         PositiveBtnCompose()
       }
+      Spacer(modifier = Modifier.weight(1F))
     }
   }
 

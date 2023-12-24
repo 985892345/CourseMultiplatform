@@ -55,7 +55,7 @@ object StuNumModel {
   fun showStuNumDialog(onSetStuNum: Dialog.(stuNum: String) -> Boolean = { true }): Dialog {
     val text = mutableStateOf(TextFieldValue(text = stuNum ?: ""))
     return ChooseDialog(
-      isTwoBtn = false,
+      isTwoBtn = stuNum != null,
       properties = DialogProperties(
         dismissOnBackPress = stuNum != null,
         dismissOnClickOutside = false,
