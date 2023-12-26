@@ -3,7 +3,7 @@
 -dontwarn kotlinx.serialization.internal.**
 -dontwarn org.slf4j.helpers.SubstituteLogger
 
--keep class io.ktor.client.engine.cio.CIOEngineContainer
+-keep class io.ktor.client.engine.okhttp.OkHttpEngineContainer
 -keep class io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider
 
 ###################################### kotlinx.serialization #######################################
@@ -23,3 +23,14 @@
 # https://juejin.cn/post/6966526844552085512
 -optimizationpasses 7                       # 代码混淆的压缩比例，值介于0-7，默认5
 -keepattributes SourceFile,LineNumberTable  # 保留行号
+
+## OkHttp https://github.com/square/okhttp
+-dontwarn javax.annotation.**
+-adaptresourcefilenames okhttp3/internal/publicsuffix/PublicSuffixDatabase.gz
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+-dontwarn okhttp3.internal.platform.**
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**
+# 下面这个是 OkHttp 依赖的 Okio
+-dontwarn org.codehaus.mojo.animal_sniffer.*

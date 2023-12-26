@@ -1,10 +1,13 @@
 package com.multiplatform.course.model
 
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.graphics.Color
 import com.multiplatform.course.compose.course.CoursePagerCompose
 import com.multiplatform.course.compose.course.item.CourseItemCompose
 import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
+import com.multiplatform.course.compose.dialog.ChooseDialog
 import com.multiplatform.course.compose.toast.toast
 import com.multiplatform.course.network.api.CourseApiService
 import com.multiplatform.course.network.bean.StuLessonBean
@@ -38,6 +41,11 @@ object CourseModel {
         CourseData(data.nowWeek, list)
       }.catch {
         toast("网络异常")
+        ChooseDialog(
+          isTwoBtn = false
+        ) {
+          DialogContent(it)
+        }.show()
       }
   }
 
@@ -48,6 +56,11 @@ object CourseModel {
     companion object {
       val Empty = CourseData(SchoolCalendar.getWeekOfTerm() ?: -1, emptyList())
     }
+  }
+
+  @Composable
+  private fun DialogContent(error: Throwable) {
+    Text(text = error.stackTraceToString(), color = Color.Black)
   }
 
   private fun createPagerItemState(

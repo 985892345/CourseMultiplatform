@@ -7,6 +7,7 @@ plugins {
   alias(libs.plugins.jetbrainsCompose)
   alias(libs.plugins.ksp)
   alias(libs.plugins.kotlinx.serialization)
+  alias(libs.plugins.ktProvider)
 }
 
 kotlin {
@@ -67,7 +68,7 @@ kotlin {
     }
     desktopMain.dependencies {
       implementation(compose.desktop.currentOs)
-      implementation(libs.ktor.engines.java)
+      implementation(libs.ktor.engines.okhttp)
     }
     iosMain.dependencies {
       implementation(libs.ktor.engines.darwin)
@@ -76,12 +77,19 @@ kotlin {
 }
 
 dependencies {
-//  add("kspCommonMainMetadata", libs.ktor.fit.ksp)
-  add("kspAndroid", libs.ktor.fit.ksp)
-  add("kspDesktop", libs.ktor.fit.ksp)
-  add("kspIosX64", libs.ktor.fit.ksp)
-  add("kspIosArm64", libs.ktor.fit.ksp)
-  add("kspIosSimulatorArm64", libs.ktor.fit.ksp)
+  val ktorfitKsp = libs.ktor.fit.ksp
+  add("kspAndroid", ktorfitKsp)
+  add("kspDesktop", ktorfitKsp)
+  add("kspIosX64", ktorfitKsp)
+  add("kspIosArm64", ktorfitKsp)
+  add("kspIosSimulatorArm64", ktorfitKsp)
+
+  add("kspCommonMainMetadata", ktProvider.ksp)
+  add("kspAndroid", ktProvider.ksp)
+  add("kspDesktop", ktProvider.ksp)
+  add("kspIosX64", ktProvider.ksp)
+  add("kspIosArm64", ktProvider.ksp)
+  add("kspIosSimulatorArm64", ktProvider.ksp)
 }
 
 android {
