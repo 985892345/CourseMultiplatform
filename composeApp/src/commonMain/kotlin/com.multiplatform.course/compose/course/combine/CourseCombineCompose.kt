@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -15,8 +18,8 @@ import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
 import com.multiplatform.course.compose.course.timeline.CourseTimelineCompose
 import com.multiplatform.course.compose.course.week.CourseWeekCompose
 import com.multiplatform.course.utils.Today
-import com.multiplatform.course.utils.diffDays
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.minus
 
 /**
  * .
@@ -25,18 +28,30 @@ import kotlinx.datetime.LocalDate
  * @date 2023/12/18 15:46
  */
 abstract class CourseCombineCompose(
-  val monDate: LocalDate?,
+  val week: Int,
   val paddingBottom: Dp = 0.dp,
 ) : IComposePresenter {
 
+  abstract val nowWeek: Int
+
   abstract val layoutItems: List<CourseLayoutCompose.LayoutItem>
 
-  private val isNowWeek = if (monDate == null) true else Today.diffDays(monDate) in 0..6
+  private val monDate by derivedStateOf(structuralEqualityPolicy()) {
+    // 获取 week 页对应的星期一日期，如果 week = 0，则说明是整学期，返回 null
+    if (week <= 0) null else Today
+      .minus(Today.dayOfWeek.ordinal, DateTimeUnit.DayBased(1))
+      .minus((nowWeek - week) * 7, DateTimeUnit.DayBased(1))
+  }
+
+  private val isNowWeek by derivedStateOf(structuralEqualityPolicy()) {
+    week == nowWeek
+  }
 
   val layoutCompose = object : CourseLayoutCompose(
-    isNowWeek = isNowWeek,
     paddingBottom = paddingBottom,
   ) {
+    override val isNowWeek: Boolean
+      get() = this@CourseCombineCompose.isNowWeek
     override val layoutItems: List<LayoutItem>
       get() = this@CourseCombineCompose.layoutItems
   }

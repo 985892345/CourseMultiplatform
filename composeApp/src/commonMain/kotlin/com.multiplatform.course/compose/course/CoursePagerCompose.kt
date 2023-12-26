@@ -30,10 +30,6 @@ import com.multiplatform.course.compose.course.combine.CourseCombineCompose
 import com.multiplatform.course.compose.course.header.CourseHeaderCompose
 import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
 import com.multiplatform.course.model.StuNumModel
-import com.multiplatform.course.utils.Today
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.minus
 
 /**
  * .
@@ -97,20 +93,16 @@ abstract class CoursePagerCompose : IComposePresenter {
   }
 
   inner class CourseCombineComposeImpl(
-    val week: Int,
-  ) : CourseCombineCompose(getMonDate(week)) {
+    week: Int,
+  ) : CourseCombineCompose(week) {
+    override val nowWeek: Int
+      get() = this@CoursePagerCompose.nowWeek
+
     override val layoutItems: List<CourseLayoutCompose.LayoutItem> by derivedStateOf(structuralEqualityPolicy()) {
       (mWeekDataMap[week] ?: emptyList()).map {
         it.layoutItem
       }
     }
-  }
-
-  // 获取 week 页对应的星期一日期，如果 week = 0，则说明是整学期，返回 null
-  private fun getMonDate(week: Int): LocalDate? {
-    if (week <= 0) return null
-    return Today.minus(Today.dayOfWeek.ordinal, DateTimeUnit.DayBased(1))
-      .minus((nowWeek - week) * 7, DateTimeUnit.DayBased(1))
   }
 
   @Stable

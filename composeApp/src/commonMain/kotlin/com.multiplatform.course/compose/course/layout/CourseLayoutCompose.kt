@@ -30,9 +30,10 @@ import kotlinx.datetime.DayOfWeek
  * @date 2023/12/18 15:33
  */
 abstract class CourseLayoutCompose(
-  val isNowWeek: Boolean,
   val paddingBottom: Dp,
 ) : IComposePresenter {
+
+  abstract val isNowWeek: Boolean
 
   /**
    * 每天对应的数据
