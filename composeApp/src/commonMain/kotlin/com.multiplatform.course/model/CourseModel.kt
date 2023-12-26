@@ -6,7 +6,6 @@ import com.multiplatform.course.compose.course.CoursePagerCompose
 import com.multiplatform.course.compose.course.item.CourseItemCompose
 import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
 import com.multiplatform.course.compose.toast.toast
-import com.multiplatform.course.network.Network
 import com.multiplatform.course.network.api.CourseApiService
 import com.multiplatform.course.network.bean.StuLessonBean
 import com.multiplatform.course.platform.Preference
@@ -29,8 +28,7 @@ object CourseModel {
     return snapshotFlow { StuNumModel.stuNum }
       .filterNotNull()
       .map {
-        val data = Network.create<CourseApiService>()
-          .getStuLesson(it)
+        val data = CourseApiService().getStuLesson(it)
         val list = data.data.map { lesson ->
           lesson.week.map { week ->
             createPagerItemState(week, lesson)

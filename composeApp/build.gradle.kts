@@ -6,7 +6,6 @@ plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.jetbrainsCompose)
   alias(libs.plugins.ksp)
-  alias(libs.plugins.ktorfit)
   alias(libs.plugins.kotlinx.serialization)
 }
 
@@ -51,6 +50,7 @@ kotlin {
       implementation(libs.compose.ui.tooling.preview)
       implementation(libs.androidx.activity.compose)
       implementation(libs.androidWheel.extensions.android)
+      implementation(libs.ktor.engines.okhttp)
     }
     commonMain.dependencies {
       implementation(compose.runtime)
@@ -60,24 +60,28 @@ kotlin {
       @OptIn(ExperimentalComposeLibrary::class)
       implementation(compose.components.resources)
       implementation(libs.kotlinx.datetime)
-      implementation(libs.ktorfit)
       implementation(libs.kotlinx.serialization)
       implementation(libs.ktor.content.negotiation)
       implementation(libs.ktor.json)
+      implementation(libs.ktor.fit.annotation)
     }
     desktopMain.dependencies {
       implementation(compose.desktop.currentOs)
+      implementation(libs.ktor.engines.java)
+    }
+    iosMain.dependencies {
+      implementation(libs.ktor.engines.darwin)
     }
   }
 }
 
 dependencies {
-  add("kspCommonMainMetadata", libs.ktorfit.ksp)
-  add("kspAndroid", libs.ktorfit.ksp)
-  add("kspDesktop", libs.ktorfit.ksp)
-  add("kspIosX64", libs.ktorfit.ksp)
-  add("kspIosArm64", libs.ktorfit.ksp)
-  add("kspIosSimulatorArm64", libs.ktorfit.ksp)
+//  add("kspCommonMainMetadata", libs.ktor.fit.ksp)
+  add("kspAndroid", libs.ktor.fit.ksp)
+  add("kspDesktop", libs.ktor.fit.ksp)
+  add("kspIosX64", libs.ktor.fit.ksp)
+  add("kspIosArm64", libs.ktor.fit.ksp)
+  add("kspIosSimulatorArm64", libs.ktor.fit.ksp)
 }
 
 android {
