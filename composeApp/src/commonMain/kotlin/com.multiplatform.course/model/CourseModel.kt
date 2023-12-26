@@ -8,7 +8,7 @@ import com.multiplatform.course.compose.course.layout.CourseLayoutCompose
 import com.multiplatform.course.compose.toast.toast
 import com.multiplatform.course.network.api.CourseApiService
 import com.multiplatform.course.network.bean.StuLessonBean
-import com.multiplatform.course.platform.Preference
+import com.multiplatform.course.utils.SchoolCalendar
 import com.multiplatform.course.utils.parseClassRoom
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -34,7 +34,7 @@ object CourseModel {
             createPagerItemState(week, lesson)
           } + createPagerItemState(0, lesson)
         }.flatten()
-        Preference.edit { put("nowWeek", data.nowWeek) }
+        SchoolCalendar.updateFirstCalendar(data.nowWeek)
         CourseData(data.nowWeek, list)
       }.catch {
         toast("网络异常")
@@ -46,7 +46,7 @@ object CourseModel {
     val list: List<CoursePagerCompose.PagerItemState>
   ) {
     companion object {
-      val Empty = CourseData(Preference.getInt("nowWeek", -1), emptyList())
+      val Empty = CourseData(SchoolCalendar.getWeekOfTerm() ?: -1, emptyList())
     }
   }
 
