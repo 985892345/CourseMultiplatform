@@ -9,7 +9,7 @@ import kotlinx.serialization.json.Json
  * 在网络请求的类中采取以下写法：
  * ```
  * @GenerateApi
- * expect class CourseApiService(client: HttpClient = AppHttpClient) {
+ * expect class CourseApiService(client: HttpClient = Network.client) {
  *
  *   @POST("https://be-prod.redrock.cqupt.edu.cn/magipoke-jwzx/kebiao")
  *   @FormUrlEncoded
@@ -29,12 +29,15 @@ import kotlinx.serialization.json.Json
  * @date 2023/12/22 19:27
  */
 
-val AppHttpClient = HttpClient {
-  install(ContentNegotiation) {
-    json(Json {
-      isLenient = true
-      ignoreUnknownKeys = true
-    })
+object Network {
+
+  val client = HttpClient {
+    install(ContentNegotiation) {
+      json(Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+      })
+    }
   }
 }
 
