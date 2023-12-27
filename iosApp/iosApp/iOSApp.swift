@@ -4,8 +4,8 @@ import ComposeApp
 @main
 struct iOSApp: App {
     init() {
-        // 初始化路由框架 KtProvider
-        MainViewControllerKt.tryInitKtProvider()
+        // init KtProvider
+        ComposeAppKtProviderInitializer.shared.tryInitKtProvider()
     }
 	var body: some Scene {
 		WindowGroup {

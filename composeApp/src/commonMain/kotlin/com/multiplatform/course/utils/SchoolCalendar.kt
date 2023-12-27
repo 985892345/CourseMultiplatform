@@ -1,7 +1,6 @@
 package com.multiplatform.course.utils
 
 import com.multiplatform.course.platform.Preference
-import com.multiplatform.course.platform.log
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -31,7 +30,6 @@ object SchoolCalendar {
    */
   fun getDayOfTerm(): Int? {
     return getFirstMonDateOfTerm()?.let {
-      log("getFirstMonDateOfTerm = $it")
       Today.diffDays(it)
     }
   }

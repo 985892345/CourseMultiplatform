@@ -65,6 +65,7 @@ kotlin {
       implementation(libs.ktor.content.negotiation)
       implementation(libs.ktor.json)
       implementation(libs.ktor.fit.annotation)
+      implementation(ktProvider.manager)
     }
     desktopMain.dependencies {
       implementation(compose.desktop.currentOs)
